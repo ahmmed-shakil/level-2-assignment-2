@@ -9,14 +9,14 @@ const createProductIntoDB = async (productData: TProduct) => {
   const result = await Product.create(productData);
   return result;
 };
-const getProductsFromDB = async (searchParam: string | undefined) => {
+const getProductsFromDB = async (searchTerm: string | undefined) => {
   // If no search parameter is provided, retrieve all products
-  if (!searchParam) {
+  if (!searchTerm) {
     return await Product.find();
   }
 
   // Regular expression to perform case-insensitive search
-  const regex = new RegExp(searchParam.trim(), "i");
+  const regex = new RegExp(searchTerm.trim(), "i");
 
   // Find products matching the search parameter in name, description or category fields
   const result = await Product.find({
@@ -26,6 +26,10 @@ const getProductsFromDB = async (searchParam: string | undefined) => {
       { category: { $regex: regex } },
     ],
   });
+
+  if (!result?.length) {
+    throw new Error("No product found");
+  }
 
   return result;
 };

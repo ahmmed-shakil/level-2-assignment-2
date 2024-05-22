@@ -5,7 +5,7 @@ import productValidationSchema from "./product.validation";
 const createProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { product } = req.body;
@@ -25,14 +25,14 @@ const createProduct = async (
 };
 const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { searchParam } = req.query;
+    const { searchTerm } = req.query;
     const result = await productServices.getProductsFromDB(
-      searchParam as string | undefined,
+      searchTerm as string | undefined
     );
     res.status(200).json({
       success: true,
-      message: searchParam
-        ? `Products matching search term '${searchParam}' fetched successfully!`
+      message: searchTerm
+        ? `Products matching search term '${searchTerm}' fetched successfully!`
         : "Products fetched successfully!",
       data: result,
     });
@@ -43,7 +43,7 @@ const getProducts = async (req: Request, res: Response, next: NextFunction) => {
 const getProductById = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { productId } = req.params;
@@ -65,7 +65,7 @@ const getProductById = async (
 const updateProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { productId } = req.params;
@@ -75,7 +75,7 @@ const updateProduct = async (
     const zodParsedData = productValidationSchema.parse(productData);
     const result = await productServices.updateProductAndSaveToDB(
       productId,
-      zodParsedData,
+      zodParsedData
     );
     res.status(200).json({
       success: true,
@@ -89,7 +89,7 @@ const updateProduct = async (
 const deleteProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { productId } = req.params;
