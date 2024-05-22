@@ -23,10 +23,11 @@ const inventoryValidationSchema = z.object({
     .default(true)
     .refine(
       (val) => typeof val === "boolean",
-      "Product stock information is required",
+      "Product stock information is required"
     ),
 });
 
+// Product validatin schema by zod
 const productValidationSchema = z.object({
   name: z
     .string({
