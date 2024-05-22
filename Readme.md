@@ -37,3 +37,10 @@ You should also install the eslint and prettier extensions for vs code
 ```
 
 <br>
+**Deployed Link:**
+
+```
+ //Live Server: https://assignment-two-backend.vercel.app/
+```
+
+<br>
