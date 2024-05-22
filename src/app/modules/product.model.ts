@@ -92,5 +92,4 @@ productSchema.pre("findOneAndUpdate", async function (next) {
     next(error as { message: string; name: string });
   }
 });
-
-export const Product = model<TProduct>("Product", productSchema);
+export const Product = model<TProduct, ProductModel>("Product", productSchema);
