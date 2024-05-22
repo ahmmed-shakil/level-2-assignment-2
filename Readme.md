@@ -25,6 +25,8 @@
 }
 ```
 
+You should also install the eslint and prettier extensions for vs code
+
 <br>
 
 **Step - 4:** Run `npm run start:dev` and we are ready to go!
