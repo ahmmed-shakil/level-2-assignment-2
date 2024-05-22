@@ -39,12 +39,15 @@ const getProductFromDBById = async (productId: string) => {
 // Find product by ID and update
 const updateProductAndSaveToDB = async (
   productId: string,
-  productData: TProduct,
+  productData: TProduct
 ) => {
+  if (await Product.isProductExists(productData?.name)) {
+    throw new Error("Product already exists");
+  }
   const result = await Product.findOneAndUpdate(
     { _id: productId },
     productData,
-    { new: true },
+    { new: true }
   );
   return result;
 };
