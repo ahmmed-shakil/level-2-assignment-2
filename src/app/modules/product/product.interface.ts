@@ -1,15 +1,18 @@
 import { Model } from "mongoose";
 
+// Product Variant
 export type TVariant = {
   type: string;
   value: string;
 };
 
+// Product Inventory
 export type TInventory = {
   quantity: number;
   inStock: boolean;
 };
 
+// Product Blueprint
 export type TProduct = {
   name: string;
   description: string;
