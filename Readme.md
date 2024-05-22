@@ -1,41 +1,37 @@
 # **Instruction**
 
-**Step - 1:** Create an `eslint.config.mjs` and copy the code from: 
-<br> 
-[Eslint File](https://github.com/ShafiaChy/Eslint-Config-Setup/blob/main/eslint.config.mjs)
-<br>
+**Step - 1:** Create a file named `.env` in the root directory and add the following environment variables
 
-*Delete the files `eslintrc` and `.eslintignore`*
-
-**Step - 2:** Copy/paste the following lines and paste inside `script` in `package.json` code from given in the package.json
 ```
-
-    "lint": "npx eslint src --ignore-pattern .ts",
-    "lint:fix": "npx eslint src --fix",
-    "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
-    "prettier:fix": "npx prettier --write src",
+    NODE_ENV=development
+    PORT=5000
+    DATABASE_URL=add the database url from mongodb atlas
 
 ```
 
 <br>
 
-**Step - 3:** Install the `prettier` package
+**Step - 2:** Run `npm i` to install the dependencies
+
+<br>
+
+**Step - 3:** In VS Code, open command palette (Command + Shift + P) and look for Preferences: Open User Settings (JSON). Then change the editor’s default formatter and add an extra config to format code when we save files:
 
 ```
-    npm install --save-dev prettier
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  ...
+}
 ```
 
 <br>
 
-<br>
-
-*If prettier does not work*, follow step 4:
-
-**Step - 4:** Add the code below to the `settings.json` file:
+**Step - 4:** Run `npm run start:dev` and we are ready to go!
 
 ```
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.formatOnSave": true,
+ //Product routes: http://localhost:5000/api/products
+ //Order routes: http://localhost:5000/api/orders
 ```
 
 <br>

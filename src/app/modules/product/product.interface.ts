@@ -1,3 +1,5 @@
+import { Model } from "mongoose";
+
 export type TVariant = {
   type: string;
   value: string;
@@ -17,3 +19,8 @@ export type TProduct = {
   variants: Array<TVariant>;
   inventory: TInventory;
 };
+
+// Stattic method
+export interface ProductModel extends Model<TProduct> {
+  isProductExists(name: string): Promise<TProduct | null>;
+}

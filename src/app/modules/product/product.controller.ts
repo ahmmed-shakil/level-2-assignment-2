@@ -1,28 +1,33 @@
 import { NextFunction, Request, Response } from "express";
 import { productServices } from "./product.service";
+import productValidationSchema from "./product.validation";
 
 const createProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { product } = req.body;
-    const result = await productServices.createProductIntoDB(product);
+
+    // data validation using zod
+    const zodParsedData = productValidationSchema.parse(product);
+
+    const result = await productServices.createProductIntoDB(zodParsedData);
     res.status(200).json({
       success: true,
       message: "Product created successfully!",
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { searchParam } = req.query;
     const result = await productServices.getProductsFromDB(
-      searchParam as string | undefined
+      searchParam as string | undefined,
     );
     res.status(200).json({
       success: true,
@@ -32,37 +37,45 @@ const getProducts = async (req: Request, res: Response, next: NextFunction) => {
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 const getProductById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { productId } = req.params;
     const result = await productServices.getProductFromDBById(productId);
+
+    // Send error response is product is not found
+    if (!result) {
+      throw new Error("Product not found");
+    }
     res.status(200).json({
       success: true,
       message: "Product fetched successfully!",
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 const updateProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { productId } = req.params;
     const { product: productData } = req.body;
+
+    // data validation using zod
+    const zodParsedData = productValidationSchema.parse(productData);
     const result = await productServices.updateProductAndSaveToDB(
       productId,
-      productData
+      zodParsedData,
     );
     res.status(200).json({
       success: true,
@@ -70,28 +83,24 @@ const updateProduct = async (
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 const deleteProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { productId } = req.params;
     const result = await productServices.deleteProductFromDB(productId);
-    if (result?.deletedCount) {
-      res.status(200).json({
-        success: true,
-        message: "Product deleted successfully!",
-        data: null,
-      });
-    } else {
-      throw new Error("Failed to delete");
-    }
+    res.status(200).json({
+      success: true,
+      message: "Product deleted successfully!",
+      data: result,
+    });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
