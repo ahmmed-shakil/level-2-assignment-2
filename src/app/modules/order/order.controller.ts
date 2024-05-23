@@ -4,7 +4,7 @@ import orderValidationSchema from "./order.validation";
 
 const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { order } = req.body;
+    const order = req.body;
 
     // data validation using zod
     const zodParsedData = orderValidationSchema.parse(order);
@@ -21,12 +21,12 @@ const createOrder = async (req: Request, res: Response, next: NextFunction) => {
 const retrieveOrders = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { email } = req.query;
     const result = await orderServices.retreiveOrders(
-      email as string | undefined,
+      email as string | undefined
     );
     if (!result?.length) {
       throw new Error("Order not found");

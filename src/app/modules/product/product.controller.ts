@@ -8,7 +8,7 @@ const createProduct = async (
   next: NextFunction
 ) => {
   try {
-    const { product } = req.body;
+    const product = req.body;
 
     // data validation using zod
     const zodParsedData = productValidationSchema.parse(product);
@@ -69,7 +69,7 @@ const updateProduct = async (
 ) => {
   try {
     const { productId } = req.params;
-    const { product: productData } = req.body;
+    const productData = req.body;
 
     // data validation using zod
     const zodParsedData = productValidationSchema.parse(productData);
